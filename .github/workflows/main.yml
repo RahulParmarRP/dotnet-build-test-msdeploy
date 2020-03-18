@@ -1,0 +1,49 @@
+name: Build-Test-MSDeploy
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  Build-Test-MSDeploy:
+
+    runs-on: windows-latest
+    env:
+      PROJECT_CSPROJ_FILE_PATH: "Example.Project.API/Example.Project.API.csproj"
+      PROJECT_DIRECTORY_PATH: "D:/ExampleProject/Example.Project.API"
+    
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 3.1.101
+        
+    - name: Build with dotnet
+      run: dotnet publish
+           %PROJECT_CSPROJ_FILE_PATH%
+           --source https://api.nuget.org/v3/index.json
+           --configuration Release
+            
+    - name: Test with dotnet
+      run: dotnet test
+    
+    - name: Deploy with MSDeploy
+      env:
+        COMPUTER_NAME: ${{ secrets.IIS_SERVER_COMPUTER_NAME }}/msdeploy.axd?site=${{ secrets.WEBSITE_NAME }}
+        SERVER_USERNAME: ${{ secrets.IIS_SERVER_USERNAME }}
+        SERVER_PASSWORD: ${{ secrets.IIS_SERVER_PASSWORD }}
+        RECYCLE_APP_NAME: ${{ secrets.RECYCLE_APP_NAME }}
+        CONTENTPATH: ${{ secrets.WEBSITE_CONTENT_PATH }}
+    
+    - name: Stop Application Pool
+      shell: cmd
+      run: '"C:/Program Files (x86)/IIS/Microsoft Web Deploy V3/msdeploy.exe" -verb:sync -allowUntrusted -source:recycleApp -dest:recycleApp="${{env.RECYCLE_APP_NAME}}",recycleMode="StopAppPool",computerName="${{ env.COMPUTER_NAME }}",username="${{ env.SERVER_USERNAME }}",password="${{ env.SERVER_PASSWORD }}",AuthType="Basic"'
+    - name: Deploy Application
+      shell: cmd
+      run: '"C:/Program Files (x86)/IIS/Microsoft Web Deploy V3/msdeploy.exe" -verb:sync -allowUntrusted -source:contentPath="${{ env.PROJECT_DIRECTORY_PATH }}\bin\Release\netcoreapp3.1\" -dest:contentPath="${{ env.CONTENTPATH }}",computerName="${{env.COMPUTER_NAME}}",username="${{ env.SERVER_USERNAME }}",password="${{ env.SERVER_PASSWORD }}",authtype="Basic"'
+    - name: Start Application Pool
+      shell: cmd
+      run: '"C:/Program Files (x86)/IIS/Microsoft Web Deploy V3/msdeploy.exe" -verb:sync -allowUntrusted -source:recycleApp -dest:recycleApp="${{ env.RECYCLE_APP_NAME }}",recycleMode="StartAppPool",computerName="${{ env.COMPUTER_NAME }}",username="${{ env.SERVER_USERNAME }}",password="${{ env.SERVER_PASSWORD }}",AuthType="Basic"'   
