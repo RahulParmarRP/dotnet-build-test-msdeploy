@@ -7,8 +7,8 @@ on:
     branches: [ master ]
 
 jobs:
-  Build-Test-MSDeploy:
 
+  build:
     runs-on: windows-latest
     env:
       PROJECT_CSPROJ_FILE_PATH: "Example.Project.API/Example.Project.API.csproj"
@@ -27,10 +27,20 @@ jobs:
            --source https://api.nuget.org/v3/index.json
            --configuration Release
             
+  test:
+    runs-on: windows-latest
+    needs: build
+    
+    steps:
     - name: Test with dotnet
       run: dotnet test
     
-    - name: Deploy with MSDeploy
+  deploy:
+    runs-on: windows-latest
+    needs: test
+    
+    steps:
+    - name: Setup environemnt variables
       run: echo "Setting up environment variables..."
       env:
         COMPUTER_NAME: ${{ secrets.IIS_SERVER_COMPUTER_NAME }}/msdeploy.axd?site=${{ secrets.WEBSITE_NAME }}
