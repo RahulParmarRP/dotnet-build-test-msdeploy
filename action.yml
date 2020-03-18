@@ -1,5 +1,5 @@
 name: 'Build-Test-MSDeploy'
-description: 'Build Test and Deploy the project right after reviewing and merging PR into the master branch using msdeploy to your hosted IIS Server Site'
+description: 'Build Test and Deploy the project right after reviewing and merging PR into the master branch using msdeploy to your hosted IIS Server Site.'
 
 branding:
   icon: "aperture"
@@ -7,11 +7,15 @@ branding:
   
 inputs: 
   project-directory-name:
-    description: '.NET project directory which needs to be published over the IIS Server Site'
+    description: '.NET project directory which needs to be published over the IIS Server Site.'
   poject-csproj-file-path:
     description: '.NET project file path for .csproj file'
     required: false
     default: ''
+  publish-build-configuration:
+    description: '.NET publish build time configurations to use in the build process.'
+    required: false
+    default: 'Release'
   git-branch-to-deploy:
     description: '.NET project branch on Github which needs to be deployed'
     required: false
