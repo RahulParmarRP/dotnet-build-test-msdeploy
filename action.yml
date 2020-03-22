@@ -5,23 +5,6 @@ branding:
   icon: "aperture"
   color: "purple"
   
-inputs: 
-  project-directory-name:
-    description: '.NET project directory which needs to be published over the IIS Server Site.'
-  poject-csproj-file-path:
-    description: '.NET project file path for .csproj file'
-    required: false
-    default: ''
-  publish-build-configuration:
-    description: '.NET publish build time configurations to use in the build process.'
-    required: false
-    default: 'Release'
-  git-branch-to-deploy:
-    description: '.NET project branch on Github which needs to be deployed'
-    required: false
-    default: 'master'
-    
 runs:
   using: 'docker'
   main: 'Dockerfile'
-   - ${{ inputs.git-branch-to-deploy }}
