@@ -22,7 +22,7 @@ jobs:
     - uses: actions/checkout@v2
     
     - name: Setup for build
-      uses: ./
+      uses: .\
       env:
         PROJECT_CSPROJ_FILE_PATH: "Example.Project.API/Example.Project.API.csproj"
         PROJECT_DIRECTORY_PATH: "D:/ExampleProject/Example.Project.API"
