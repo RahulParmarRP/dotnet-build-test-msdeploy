@@ -23,7 +23,10 @@ jobs:
     
     - name: Setup for build
       uses: ./
-
+      env:
+        PROJECT_CSPROJ_FILE_PATH: "Example.Project.API/Example.Project.API.csproj"
+        PROJECT_DIRECTORY_PATH: "D:/ExampleProject/Example.Project.API"
+      
     - name: Setup .NET Core
       uses: actions/setup-dotnet@v1
       with:
