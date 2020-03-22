@@ -19,7 +19,10 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - uses: ./
+    
+    - name: Setup for build
+      uses: ./
+
     - name: Setup .NET Core
       uses: actions/setup-dotnet@v1
       with:
