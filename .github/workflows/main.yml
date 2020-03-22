@@ -8,7 +8,7 @@ on:
 jobs:
 
   Build-Test-Deploy:
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
     env:
       PROJECT_CSPROJ_FILE_PATH: "Example.Project.API/Example.Project.API.csproj"
       PROJECT_DIRECTORY_PATH: "D:/ExampleProject/Example.Project.API"
