@@ -20,17 +20,17 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    
-    - name: Setup for build
-      uses: .\
-      env:
-        PROJECT_CSPROJ_FILE_PATH: "Example.Project.API/Example.Project.API.csproj"
-        PROJECT_DIRECTORY_PATH: "D:/ExampleProject/Example.Project.API"
       
     - name: Setup .NET Core
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: 3.1.101
+        
+    - name: Setup for build
+      uses: ./
+      env:
+        PROJECT_CSPROJ_FILE_PATH: "Example.Project.API/Example.Project.API.csproj"
+        PROJECT_DIRECTORY_PATH: "D:/ExampleProject/Example.Project.API"
         
     - name: Build with dotnet
       run: dotnet publish
