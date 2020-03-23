@@ -10,7 +10,6 @@ jobs:
   Build-Test-Deploy:
     runs-on: ubuntu-latest
     env:
-      PROJECT_CSPROJ_FILE_PATH: "Example.Project.API/Example.Project.API.csproj"
       PROJECT_DIRECTORY_PATH: "D:/ExampleProject/Example.Project.API"
       COMPUTER_NAME: ${{ secrets.IIS_SERVER_COMPUTER_NAME }}/msdeploy.axd?site=${{ secrets.WEBSITE_NAME }}
       SERVER_USERNAME: ${{ secrets.IIS_SERVER_USERNAME }}
@@ -21,20 +20,17 @@ jobs:
     steps:
     - uses: actions/checkout@v2
       
+    - name: Checking environment...
+      uses: ./
+
     - name: Setup .NET Core
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: 3.1.101
         
-    - name: Setup for build
-      uses: ./
-      env:
-        PROJECT_CSPROJ_FILE_PATH: "Example.Project.API/Example.Project.API.csproj"
-        PROJECT_DIRECTORY_PATH: "D:/ExampleProject/Example.Project.API"
-        
     - name: Build with dotnet
       run: dotnet publish
-           ${{ env.PROJECT_CSPROJ_FILE_PATH }}
+           ${{ env.PROJECT_DIRECTORY_PATH }}/${{ env.PROJECT_DIRECTORY_PATH }}.csproj
            --source https://api.nuget.org/v3/index.json
            --configuration Release
 
