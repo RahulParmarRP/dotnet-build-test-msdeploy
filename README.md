@@ -1,7 +1,7 @@
 # dotnet-build-test-msdeploy
 .NET core build test and msdeploy to deploy your website's publish folder to your personally hosted IIS server.
 
-# Testes project with example
+# Tested project with example
 https://github.com/RahulParmarRP/TestGithubActions
 
 # Configuring a Web Server for Web Deploy Publishing
@@ -17,11 +17,11 @@ Create a README.md file that specifies the following information:
 - Optional input and output arguments.
 - Secrets the action uses.
 - Environment variables the action uses.
-    PROJECT_DIRECTORY_PATH  :
-    COMPUTER_NAME           :
-    IIS_WEBSITE_NAME        :
-    SERVER_USERNAME         :
-    SERVER_PASSWORD         :
-    RECYCLE_APP_NAME        :
-    CONTENTPATH             :
+    - PROJECT_DIRECTORY_PATH
+    - IIS_SERVER_COMPUTER_NAME         
+    - IIS_WEBSITE_NAME      
+    - IIS_SERVER_USERNAME       
+    - IIS_SERVER_PASSWORD       
+    - RECYCLE_APP_NAME      
+    - WEBSITE_CONTENT_PATH           
 - An example of how to use your action in a workflow.
