@@ -18,10 +18,10 @@ Create a README.md file that specifies the following information:
 - Secrets the action uses.
 - Environment variables the action uses.
     - PROJECT_DIRECTORY_PATH
-    - COMPUTER_NAME         
+    - IIS_SERVER_COMPUTER_NAME         
     - IIS_WEBSITE_NAME      
-    - SERVER_USERNAME       
-    - SERVER_PASSWORD       
+    - IIS_SERVER_USERNAME       
+    - IIS_SERVER_PASSWORD       
     - RECYCLE_APP_NAME      
-    - CONTENTPATH           
+    - WEBSITE_CONTENT_PATH           
 - An example of how to use your action in a workflow.
