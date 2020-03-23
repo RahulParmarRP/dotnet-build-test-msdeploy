@@ -1,0 +1,24 @@
+{
+  "name": "dotnet-build-test-msdeploy",
+  "version": "1.0.0",
+  "description": ".NET core build test and msdeploy to deploy your website's publish folder to your personally hosted IIS server.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RahulParmarRP/dotnet-build-test-msdeploy.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/RahulParmarRP/dotnet-build-test-msdeploy/issues"
+  },
+  "homepage": "https://github.com/RahulParmarRP/dotnet-build-test-msdeploy#readme",
+  "dependencies": {
+    "@actions/core": "^1.2.3",
+    "@actions/github": "^2.1.1"
+  }
+}
