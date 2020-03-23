@@ -4,7 +4,28 @@ description: 'Build Test and Deploy the project right after reviewing and mergin
 branding:
   icon: "aperture"
   color: "purple"
-  
-runs:
-  using: 'node12'
-  main: 'index.js'
+
+jobs:
+
+  Build-Test-Deploy:
+    runs-on: windows-latest
+    env:
+      PROJECT_DIRECTORY_PATH: "TestGithubActions"
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 3.1.101
+        
+    - name: Build with dotnet
+      run: dotnet publish
+           ${{ env.PROJECT_DIRECTORY_PATH }}/${{ env.PROJECT_DIRECTORY_PATH }}.csproj
+           --source https://api.nuget.org/v3/index.json
+           --configuration Release
+           
+    - name: Test with dotnet
+      run: dotnet test
+    
