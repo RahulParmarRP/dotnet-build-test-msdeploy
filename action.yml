@@ -1,5 +1,5 @@
 name: 'Build-Test-MSDeploy'
-description: 'Build Test and Deploy the project right after reviewing and merging PR into the master branch using msdeploy to your hosted IIS Server Site.'
+description: 'Build Test and Deploy the project using msdeploy to your hosted IIS Server Site.'
 
 branding:
   icon: "aperture"
