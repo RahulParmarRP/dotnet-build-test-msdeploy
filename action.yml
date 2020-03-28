@@ -6,5 +6,5 @@ branding:
   color: "purple"
   
 runs:
-  using: 'node12'
-  main: 'index.js'
+  using: 'docker'
+  image: 'Dockerfile'

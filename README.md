@@ -7,6 +7,9 @@ https://github.com/RahulParmarRP/TestGithubActions
 # Configuring a Web Server for Web Deploy Publishing
 https://docs.microsoft.com/en-us/aspnet/web-forms/overview/deployment/configuring-server-environments-for-web-deployment/configuring-a-web-server-for-web-deploy-publishing-web-deploy-handler
 
+# Using Windows PowerShell commands in a DockerFile to set up Windows Containers
+
+https://docs.microsoft.com/en-us/dotnet/architecture/containerized-lifecycle/design-develop-containerized-apps/set-up-windows-containers-with-powershell
 
 # To-Do
 

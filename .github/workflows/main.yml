@@ -2,47 +2,15 @@ name: Dotnet Build-Test-MSDeploy your project
 
 on:
   push:
-    branches: [ master ]
+    branches: [ docker-file-windows-server ]
 
 jobs:
 
   Build-Test-Deploy:
     runs-on: windows-latest
-    env:
-      PROJECT_DIRECTORY_PATH: "TestGithubActions"
-      IIS_SERVER_COMPUTER_NAME: ${{ secrets.IIS_SERVER_COMPUTER_NAME }}
-      IIS_WEBSITE_NAME: ${{ secrets.IIS_WEBSITE_NAME }}
-      IIS_SERVER_USERNAME: ${{ secrets.IIS_SERVER_USERNAME }}
-      IIS_SERVER_PASSWORD: ${{ secrets.IIS_SERVER_PASSWORD }}
-      RECYCLE_APP_NAME: ${{ secrets.RECYCLE_APP_NAME }}
-      WEBSITE_CONTENT_PATH: ${{ secrets.WEBSITE_CONTENT_PATH }}
 
     steps:
     - uses: actions/checkout@v2
 
     - name: Checking environment...
-      uses: RahulParmarRP/dotnet-build-test-msdeploy@master
-
-    - name: Setup .NET Core
-      uses: actions/setup-dotnet@v1
-      with:
-        dotnet-version: 3.1.101
-        
-    - name: Build with dotnet
-      run: dotnet publish
-           ${{ env.PROJECT_DIRECTORY_PATH }}/${{ env.PROJECT_DIRECTORY_PATH }}.csproj
-           --source https://api.nuget.org/v3/index.json
-           --configuration Release
-
-    - name: Test with dotnet
-      run: dotnet test
-    
-    - name: Stop Application Pool
-      shell: cmd
-      run: '"C:/Program Files (x86)/IIS/Microsoft Web Deploy V3/msdeploy.exe" -verb:sync -allowUntrusted -source:recycleApp -dest:recycleApp="${{ env.RECYCLE_APP_NAME }}",recycleMode="StopAppPool",computerName="${{ env.IIS_SERVER_COMPUTER_NAME }}/msdeploy.axd?site=${{ env.IIS_WEBSITE_NAME }}",username="${{ env.IIS_SERVER_USERNAME }}",password="${{ env.IIS_SERVER_PASSWORD }}",AuthType="Basic"'
-    - name: Deploy Application
-      shell: cmd
-      run: '"C:/Program Files (x86)/IIS/Microsoft Web Deploy V3/msdeploy.exe" -verb:sync -allowUntrusted -source:contentPath="%CD%\${{ env.PROJECT_DIRECTORY_PATH }}\bin\Release\netcoreapp3.1\" -dest:contentPath="${{ env.WEBSITE_CONTENT_PATH }}",computerName="${{ env.IIS_SERVER_COMPUTER_NAME }}/msdeploy.axd?site=${{ env.IIS_WEBSITE_NAME }}",username="${{ env.IIS_SERVER_USERNAME }}",password="${{ env.IIS_SERVER_PASSWORD }}",authtype="Basic"'
-    - name: Start Application Pool
-      shell: cmd
-      run: '"C:/Program Files (x86)/IIS/Microsoft Web Deploy V3/msdeploy.exe" -verb:sync -allowUntrusted -source:recycleApp -dest:recycleApp="${{ env.RECYCLE_APP_NAME }}",recycleMode="StartAppPool",computerName="${{ env.IIS_SERVER_COMPUTER_NAME }}/msdeploy.axd?site=${{ env.IIS_WEBSITE_NAME }}",username="${{ env.IIS_SERVER_USERNAME }}",password="${{ env.IIS_SERVER_PASSWORD }}",AuthType="Basic"'   
+      uses: RahulParmarRP/dotnet-build-test-msdeploy@docker-file-windows-server
