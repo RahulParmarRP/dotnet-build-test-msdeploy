@@ -20,9 +20,6 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
-    - name: Checking environment...
-      uses: RahulParmarRP/dotnet-build-test-msdeploy@master
-
     - name: Setup .NET Core
       uses: actions/setup-dotnet@v1
       with:
@@ -31,6 +28,9 @@ jobs:
     - name: Run msdeploy help
       run: MSDeploy -help
       
+    - name: Checking environment...
+      uses: RahulParmarRP/dotnet-build-test-msdeploy@master
+
     - name: Build with dotnet
       run: dotnet publish
            ${{ env.PROJECT_DIRECTORY_PATH }}/${{ env.PROJECT_DIRECTORY_PATH }}.csproj
@@ -41,11 +41,11 @@ jobs:
       run: dotnet test
     
     - name: Stop Application Pool
-      shell: cmd
+      shell: sh
       run: '"C:/Program Files (x86)/IIS/Microsoft Web Deploy V3/msdeploy.exe" -verb:sync -allowUntrusted -source:recycleApp -dest:recycleApp="${{ env.RECYCLE_APP_NAME }}",recycleMode="StopAppPool",computerName="${{ env.IIS_SERVER_COMPUTER_NAME }}/msdeploy.axd?site=${{ env.IIS_WEBSITE_NAME }}",username="${{ env.IIS_SERVER_USERNAME }}",password="${{ env.IIS_SERVER_PASSWORD }}",AuthType="Basic"'
     - name: Deploy Application
-      shell: cmd
+      shell: sh
       run: '"C:/Program Files (x86)/IIS/Microsoft Web Deploy V3/msdeploy.exe" -verb:sync -allowUntrusted -source:contentPath="%CD%\${{ env.PROJECT_DIRECTORY_PATH }}\bin\Release\netcoreapp3.1\" -dest:contentPath="${{ env.WEBSITE_CONTENT_PATH }}",computerName="${{ env.IIS_SERVER_COMPUTER_NAME }}/msdeploy.axd?site=${{ env.IIS_WEBSITE_NAME }}",username="${{ env.IIS_SERVER_USERNAME }}",password="${{ env.IIS_SERVER_PASSWORD }}",authtype="Basic"'
     - name: Start Application Pool
-      shell: cmd
+      shell: sh
       run: '"C:/Program Files (x86)/IIS/Microsoft Web Deploy V3/msdeploy.exe" -verb:sync -allowUntrusted -source:recycleApp -dest:recycleApp="${{ env.RECYCLE_APP_NAME }}",recycleMode="StartAppPool",computerName="${{ env.IIS_SERVER_COMPUTER_NAME }}/msdeploy.axd?site=${{ env.IIS_WEBSITE_NAME }}",username="${{ env.IIS_SERVER_USERNAME }}",password="${{ env.IIS_SERVER_PASSWORD }}",AuthType="Basic"'   
